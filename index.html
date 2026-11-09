@@ -1,368 +1,859 @@
-```html
 <!DOCTYPE html>
-<html lang="ru" class="dark">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>APEX PROTOCOL // LIFE OS</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life OS | Cyber RPG Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(15, 19, 32, 0.75);
+      --card-border: rgba(45, 60, 95, 0.4);
+      --card-border-glow: rgba(0, 240, 255, 0.3);
+      --neon-cyan: #00f0ff;
+      --neon-purple: #a855f7;
+      --neon-emerald: #10b981;
+      --neon-amber: #f59e0b;
+      --neon-rose: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-dim: #94a3b8;
+    }
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-            display: ['"Chakra Petch"', 'sans-serif'],
-          },
-          colors: {
-            apex: {
-              bg: '#08090e',
-              card: 'rgba(16, 20, 31, 0.75)',
-              border: 'rgba(255, 255, 255, 0.08)',
-              borderGlow: 'rgba(56, 189, 248, 0.25)',
-              emerald: '#10b981',
-              cyan: '#06b6d4',
-              amber: '#f59e0b',
-              crimson: '#f43f5e',
-              purple: '#a855f7',
-              pink: '#ec4899',
-            }
-          },
-          boxShadow: {
-            'neon-cyan': '0 0 20px -5px rgba(6, 182, 212, 0.5)',
-            'neon-emerald': '0 0 20px -5px rgba(16, 185, 129, 0.5)',
-            'neon-amber': '0 0 20px -5px rgba(245, 158, 11, 0.5)',
-            'neon-purple': '0 0 20px -5px rgba(168, 85, 247, 0.5)',
-            'neon-crimson': '0 0 20px -5px rgba(244, 63, 94, 0.5)',
-            'card-glow': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-          }
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Rajdhani', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #111827 0%, var(--bg) 70%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1300px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Верхняя навигационная панель */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      padding: 16px 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-btn.active {
+      color: var(--neon-cyan);
+      border-color: var(--neon-cyan);
+      background: rgba(0, 240, 255, 0.08);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+
+    /* Секции контента */
+    .tab-content {
+      display: none;
+      width: 100%;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Сетка дашборда (3 колонки) */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr 340px;
+      gap: 20px;
+    }
+
+    @media (max-width: 1080px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
       }
     }
-  </script>
 
-  <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #08090e;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(56, 189, 248, 0.4);
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      position: relative;
     }
 
-    /* Ambient cyber grid background */
-    .cyber-grid {
-      background-size: 40px 40px;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* Glass card styles */
-    .glass-panel {
-      background: rgba(14, 18, 28, 0.78);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+    .panel-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 1.5px;
+      color: var(--neon-cyan);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Колонка 1: Сферы */
+    .sphere-item {
+      margin-bottom: 16px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+
+    .sphere-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .sphere-bar-bg {
+      width: 100%;
+      height: 9px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .sphere-bar-fill {
+      height: 100%;
+      border-radius: 20px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    /* Колонка 2: Квесты */
+    .quest-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.07);
-    }
-    .glass-panel:hover {
-      border-color: rgba(255, 255, 255, 0.14);
-    }
-
-    /* Pulsing & Glow animations */
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 8px currentColor); }
-      50% { opacity: 1; filter: drop-shadow(0 0 16px currentColor); }
-    }
-    .animate-pulse-glow {
-      animation: pulseGlow 3s infinite ease-in-out;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
     }
 
-    /* Neon progress bar glow */
-    .bar-glow-emerald { box-shadow: 0 0 12px rgba(16, 185, 129, 0.7); }
-    .bar-glow-cyan    { box-shadow: 0 0 12px rgba(6, 182, 212, 0.7); }
-    .bar-glow-amber   { box-shadow: 0 0 12px rgba(245, 158, 11, 0.7); }
-    .bar-glow-crimson { box-shadow: 0 0 12px rgba(244, 63, 94, 0.7); }
-    .bar-glow-purple  { box-shadow: 0 0 12px rgba(168, 85, 247, 0.7); }
-    .bar-glow-pink    { box-shadow: 0 0 12px rgba(236, 72, 153, 0.7); }
+    .quest-item:hover {
+      border-color: rgba(0, 240, 255, 0.4);
+      background: rgba(0, 240, 255, 0.03);
+    }
+
+    .quest-item.completed {
+      border-color: var(--neon-emerald);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .quest-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .custom-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--text-dim);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      color: transparent;
+      transition: all 0.2s;
+    }
+
+    .quest-item.completed .custom-checkbox {
+      background: var(--neon-emerald);
+      border-color: var(--neon-emerald);
+      color: #000;
+      box-shadow: 0 0 10px var(--neon-emerald);
+    }
+
+    .quest-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .quest-pts {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      color: var(--neon-amber);
+      font-weight: 700;
+    }
+
+    /* Колонка 3: Аналитика */
+    .circle-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .circle-chart {
+      position: relative;
+      width: 140px;
+      height: 140px;
+    }
+
+    .circle-chart svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .circle-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 8;
+    }
+
+    .circle-progress {
+      fill: none;
+      stroke: var(--neon-cyan);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 377;
+      transition: stroke-dashoffset 0.5s ease;
+      filter: drop-shadow(0 0 8px var(--neon-cyan));
+    }
+
+    .circle-inner-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .circle-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .circle-sub {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 1.05rem;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 16px;
+      background: linear-gradient(135deg, var(--neon-cyan), #0077ff);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    }
+
+    /* Формы и вкладка Настройки */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.15);
+    }
   </style>
 </head>
+<body>
 
-<body class="bg-apex-bg text-slate-200 min-h-screen cyber-grid font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden">
-
-  <!-- TOP HUD NAVIGATION -->
-  <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-3.5 backdrop-blur-xl">
-    <div class="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-4">
-      
-      <!-- Brand & Status -->
-      <div class="flex items-center space-x-4">
-        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-500/40 shadow-neon-cyan">
-          <i data-lucide="shield" class="w-5 h-5 text-cyan-400"></i>
-          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
-          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full"></span>
-        </div>
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="font-display font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-300 text-lg">APEX PROTOCOL</span>
-            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-500/30">v2.4 Online</span>
-          </div>
-          <div class="text-xs text-slate-400 font-mono flex items-center space-x-2">
-            <span id="liveClock">--:--:--</span>
-            <span>•</span>
-            <span id="liveDate">8 ноября, Воскресенье</span>
-          </div>
-        </div>
+  <div class="container">
+    <!-- Шапка и Табы -->
+    <header>
+      <div class="brand">
+        <span style="font-size: 1.6rem;">⚡</span>
+        <div class="brand-title">LIFE OS // RPG</div>
       </div>
-
-      <!-- Navigation Tabs -->
-      <nav class="flex items-center bg-slate-900/80 p-1 rounded-xl border border-white/5 space-x-1">
-        <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-sm">
-          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-          <span>Главный дашборд</span>
-        </button>
-        <button onclick="switchTab('finances')" id="tabBtn-finances" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-white/5">
-          <i data-lucide="wallet" class="w-4 h-4"></i>
-          <span>Казна & Финансы</span>
-        </button>
-        <button onclick="switchTab('journal')" id="tabBtn-journal" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-white/5">
-          <i data-lucide="calendar-check" class="w-4 h-4"></i>
-          <span>Журнал спринта</span>
-        </button>
-        <button onclick="switchTab('settings')" id="tabBtn-settings" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-white/5">
-          <i data-lucide="sliders" class="w-4 h-4"></i>
-          <span>Настройки</span>
-        </button>
+      <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('dashboard')">🎮 Дашборд</button>
+        <button class="tab-btn" onclick="switchTab('finance')">📊 Финансы</button>
+        <button class="tab-btn" onclick="switchTab('settings')">⚙️ Настройки</button>
       </nav>
+    </header>
 
-      <!-- Character Global Stats / Streak -->
-      <div class="flex items-center space-x-4 font-mono text-xs">
-        <!-- Sprint Days Left -->
-        <div class="hidden lg:flex items-center bg-slate-900/60 border border-white/10 px-3.5 py-1.5 rounded-xl">
-          <i data-lucide="flag" class="w-3.5 h-3.5 text-amber-400 mr-2"></i>
-          <span class="text-slate-400 mr-1.5">Спринт:</span>
-          <span class="text-amber-300 font-bold" id="sprintDaysRemaining">53 дня</span>
+    <!-- ВКЛАДКА 1: ДАШБОРД -->
+    <div id="tab-dashboard" class="tab-content active">
+      <div class="dashboard-grid">
+        
+        <!-- Колонка 1: Характеристики Сфер -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>🛡️</span> КАРТА СФЕР</div>
+            <span style="font-size: 0.85rem; color: var(--text-dim);" id="overall-lvl">Ср. Ур: 4.7</span>
+          </div>
+          <div id="spheres-list"></div>
         </div>
 
-        <!-- Streak Counter -->
-        <div class="flex items-center bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 px-3.5 py-1.5 rounded-xl">
-          <span class="text-base mr-1.5">🔥</span>
-          <span class="text-slate-300 mr-1">Стрик:</span>
-          <span class="text-amber-400 font-bold font-mono text-sm" id="hudStreakDays">4 дня</span>
-          <span class="ml-2 text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">x1.2 XP</span>
+        <!-- Колонка 2: Ежедневные Квесты -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>⚔️</span> КВЕСТЫ НА СЕГОДНЯ</div>
+            <span style="font-size: 0.85rem; color: var(--neon-cyan);" id="date-label">Сегодня</span>
+          </div>
+          <div id="quests-list"></div>
         </div>
 
-        <!-- Overall Level Badge -->
-        <div class="flex items-center bg-purple-950/40 border border-purple-500/30 px-3.5 py-1.5 rounded-xl">
-          <i data-lucide="award" class="w-4 h-4 text-purple-400 mr-2"></i>
-          <span class="text-slate-300 mr-1">Уровень:</span>
-          <span class="text-purple-300 font-bold font-mono text-sm" id="hudGlobalLevel">Lvl 4.7</span>
+        <!-- Колонка 3: Аналитика и Спринт -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>🔮</span> АКТИВНОСТЬ</div>
+            <span style="color: var(--neon-amber); font-weight: 700;" id="multiplier-badge">x1.0 XP</span>
+          </div>
+
+          <div class="circle-wrap">
+            <div class="circle-chart">
+              <svg viewBox="0 0 140 140">
+                <circle class="circle-bg" cx="70" cy="70" r="60" />
+                <circle id="xp-circle" class="circle-progress" cx="70" cy="70" r="60" />
+              </svg>
+              <div class="circle-inner-text">
+                <div class="circle-val" id="total-xp-display">0</div>
+                <div class="circle-sub">из 120 PTS</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="metric-row">
+            <span>🔥 Стрик активности:</span>
+            <strong style="color: var(--neon-amber);" id="streak-display">0 дней</strong>
+          </div>
+          <div class="metric-row">
+            <span>🛡️ Защита от срыва:</span>
+            <strong style="color: var(--neon-cyan);">1 активна</strong>
+          </div>
+          <div class="metric-row">
+            <span>🎯 Спринт до 31 дек:</span>
+            <strong style="color: var(--neon-purple);" id="sprint-progress-text">18%</strong>
+          </div>
+
+          <button class="action-btn" onclick="completeDay()">ЗАФИКСИРОВАТЬ ДЕНЬ</button>
         </div>
+
       </div>
     </div>
-  </header>
 
-  <!-- MAIN WRAPPER -->
-  <main class="max-w-[1720px] mx-auto p-4 md:p-6 pb-20">
-
-    <!-- ============================================================== -->
-    <!-- TAB 1: ГЛАВНЫЙ ДАШБОРД (3 КОЛОНКИ НА НОУТБУКЕ) -->
-    <!-- ============================================================== -->
-    <div id="view-dashboard" class="tab-view block space-y-6">
-      
-      <!-- Top Alert / Motive Banner -->
-      <div class="glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between border-l-4 border-l-cyan-400 gap-4">
-        <div class="flex items-center space-x-3.5">
-          <div class="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-            <i data-lucide="sparkles" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h2 class="font-display font-semibold text-white tracking-wide flex items-center gap-2">
-              Тестовый полигон: «Спринт до 31 декабря»
-              <span class="text-xs font-mono font-normal text-cyan-300 bg-cyan-950/60 border border-cyan-800 px-2 py-0.5 rounded-full">Режим закрепления базы</span>
-            </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Главная цель периода: не ставить рекорды, а закрепить привычку ежедневного заполнения и удерживать стрик.</p>
-          </div>
-        </div>
-        <div class="flex items-center space-x-3 self-end md:self-center">
-          <button onclick="resetDayQuestsPrompt()" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/20 text-xs font-mono text-slate-300 hover:bg-white/5 transition flex items-center space-x-1.5">
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-            <span>Сброс дня</span>
-          </button>
-          <button onclick="completeDayRoutine()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-semibold text-xs tracking-wider uppercase font-display shadow-neon-cyan transition transform active:scale-95 flex items-center space-x-2">
-            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-            <span>Зафиксировать день</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- 3 COLUMNS DESKTOP LAYOUT (1fr - 1.25fr - 1fr) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- ВКЛАДКА 2: ФИНАНСЫ -->
+    <div id="tab-finance" class="tab-content">
+      <div class="dashboard-grid">
         
-        <!-- ========================================== -->
-        <!-- COLUMN 1: КАРТА СФЕР (Характеристики 1-10) -->
-        <!-- ========================================== -->
-        <section class="lg:col-span-4 space-y-4">
-          <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center space-x-2.5">
-                <i data-lucide="compass" class="w-5 h-5 text-cyan-400"></i>
-                <h3 class="font-display font-bold uppercase tracking-wider text-sm text-slate-100">Карта сфер</h3>
-              </div>
-              <span class="text-[11px] font-mono text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">Прокачка 1–10</span>
-            </div>
-            <p class="text-xs text-slate-400 mb-5 leading-relaxed">
-              Текущий уровень формируется из базовой оценки и очков, полученных за регулярные действия в квестах.
-            </p>
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>💰</span> БАЛАНС И ЗАРПЛАТА</div>
+          </div>
+          <div class="form-group">
+            <label>Основной оклад / Доход (мес):</label>
+            <input type="number" id="fin-income" value="57190" onchange="saveFinance()">
+          </div>
+          <div class="form-group">
+            <label>Общий остаток долгов к закрытию (руб):</label>
+            <input type="number" id="fin-debts" value="0" placeholder="Сумма долгов" onchange="saveFinance()">
+          </div>
+          <div class="metric-row" style="margin-top: 15px;">
+            <span>Всего потрачено в этом месяце:</span>
+            <strong style="color: var(--neon-rose);" id="total-expenses-display">0 ₽</strong>
+          </div>
+        </div>
 
-            <!-- Sphere Cards Container -->
-            <div id="spheresContainer" class="space-y-4">
-              <!-- Rendered via JavaScript -->
-            </div>
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>✍️</span> ВНЕСТИ РАСХОД</div>
+          </div>
+          <div class="form-group">
+            <label>Наименование траты:</label>
+            <input type="text" id="expense-name" placeholder="Например: продукты, аптека...">
+          </div>
+          <div class="form-group">
+            <label>Сумма (₽):</label>
+            <input type="number" id="expense-amount" placeholder="500">
+          </div>
+          <button class="action-btn" onclick="addExpense()">ДОБАВИТЬ В УЧЕТ</button>
+        </div>
 
-            <!-- Inspect Sphere Modal / Helper tip -->
-            <div class="mt-5 p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] text-slate-400 flex items-start space-x-2.5">
-              <i data-lucide="info" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
-              <span>Кликните на карточку сферы, чтобы раскрыть её подробные составляющие и текущие стандарты.</span>
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>📜</span> ИСТОРИЯ ОПЕРАЦИЙ</div>
+          </div>
+          <div id="expenses-history" style="max-height: 320px; overflow-y: auto;"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ВКЛАДКА 3: НАСТРОЙКИ И ДАННЫЕ -->
+    <div id="tab-settings" class="tab-content">
+      <div class="dashboard-grid">
+        
+        <!-- Управление сферами -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>⚙️</span> БАЗОВЫЕ УРОВНИ СФЕР</div>
+          </div>
+          <div id="spheres-settings-list"></div>
+          <button class="btn-secondary" style="width: 100%; margin-top: 10px;" onclick="saveSpheresConfig()">СОХРАНИТЬ УРОВНИ</button>
+        </div>
+
+        <!-- Управление квестами -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>➕</span> ДОБАВИТЬ НОВЫЙ КВЕСТ</div>
+          </div>
+          <div class="form-group">
+            <label>Название действия / квеста:</label>
+            <input type="text" id="new-quest-name" placeholder="Например: Прогулка 30 минут">
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Баллы (XP):</label>
+              <input type="number" id="new-quest-pts" value="15">
+            </div>
+            <div class="form-group">
+              <label>Сфера:</label>
+              <select id="new-quest-sphere">
+                <option value="religion">Религия</option>
+                <option value="health">Здоровье</option>
+                <option value="career">Профессия</option>
+                <option value="finance">Финансы</option>
+                <option value="family">Семья</option>
+                <option value="hobby">Увлечения</option>
+              </select>
             </div>
           </div>
-        </section>
+          <button class="action-btn" onclick="addNewQuest()">СОЗДАТЬ КВЕСТ</button>
+        </div>
 
-        <!-- ========================================== -->
-        <!-- COLUMN 2: КВЕСТЫ НА СЕГОДНЯ (Ежедневный To-Do) -->
-        <!-- ========================================== -->
-        <section class="lg:col-span-4 space-y-4">
-          <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
-            
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center space-x-2.5">
-                <i data-lucide="crosshair" class="w-5 h-5 text-emerald-400"></i>
-                <h3 class="font-display font-bold uppercase tracking-wider text-sm text-slate-100">Квесты на сегодня</h3>
-              </div>
-              <span id="questsCompletedCounter" class="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
-                4 / 8 выполнено
-              </span>
-            </div>
-            <p class="text-xs text-slate-400 mb-5">
-              Отмечайте выполненные действия. Каждое действие мгновенно начисляет очки и питает шкалу сферы.
-            </p>
-
-            <!-- Quests List -->
-            <div id="dailyQuestsList" class="space-y-2.5">
-              <!-- Rendered via JavaScript -->
-            </div>
-
-            <!-- Add Custom Task Form -->
-            <div class="mt-6 pt-5 border-t border-white/10">
-              <div class="flex items-center justify-between mb-2.5">
-                <span class="text-xs font-mono font-medium text-slate-300 flex items-center gap-1.5">
-                  <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-cyan-400"></i> Добавить разовую задачу дня
-                </span>
-                <span class="text-[10px] font-mono text-cyan-400">+10 PTS</span>
-              </div>
-              <form id="addCustomTaskForm" onsubmit="addCustomTask(event)" class="space-y-2.5">
-                <div class="flex gap-2">
-                  <input type="text" id="customTaskTitle" placeholder="Что нужно сделать сегодня..." required class="flex-1 bg-slate-900/90 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition" />
-                  <select id="customTaskSphere" class="bg-slate-900/90 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-500 transition">
-                    <option value="religion">Религия</option>
-                    <option value="health">Здоровье</option>
-                    <option value="career" selected>Профессия</option>
-                    <option value="finances">Финансы</option>
-                    <option value="family">Семья</option>
-                    <option value="hobbies">Увлечения</option>
-                  </select>
-                </div>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-1.5 text-xs text-slate-400 font-mono">
-                    <span>Приоритет:</span>
-                    <label class="cursor-pointer"><input type="radio" name="priority" value="P1" class="hidden peer"><span class="peer-checked:bg-rose-500/20 peer-checked:text-rose-300 peer-checked:border-rose-500 px-2 py-0.5 rounded border border-white/10 text-[10px]">P1 Высокий</span></label>
-                    <label class="cursor-pointer"><input type="radio" name="priority" value="P2" checked class="hidden peer"><span class="peer-checked:bg-amber-500/20 peer-checked:text-amber-300 peer-checked:border-amber-500 px-2 py-0.5 rounded border border-white/10 text-[10px]">P2 Средний</span></label>
-                  </div>
-                  <button type="submit" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 text-xs font-mono font-semibold transition">
-                    + Добавить
-                  </button>
-                </div>
-              </form>
-
-              <!-- Custom Tasks Render Target -->
-              <div id="customTasksContainer" class="mt-3 space-y-2">
-                <!-- Dynamically generated custom tasks -->
-              </div>
-            </div>
-
+        <!-- Экспорт и импорт данных -->
+        <div class="glass-card">
+          <div class="panel-header">
+            <div class="panel-title"><span>💾</span> БЭКАП И СИНХРОНИЗАЦИЯ</div>
           </div>
-        </section>
+          <p style="font-size: 0.95rem; color: var(--text-dim); margin-bottom: 14px;">
+            Экспортируй JSON-файл для переноса сохранений между ноутбуком, планшетом и телефоном.
+          </p>
+          <button class="btn-secondary" style="width: 100%; margin-bottom: 10px;" onclick="exportData()">СКАЧАТЬ БЭКАП (JSON)</button>
+          <input type="file" id="import-file" style="display: none;" onchange="importData(event)">
+          <button class="btn-secondary" style="width: 100%;" onclick="document.getElementById('import-file').click()">ЗАГРУЗИТЬ БЭКАП</button>
+        </div>
 
-        <!-- ========================================== -->
-        <!-- COLUMN 3: АНАЛИТИКА, МНОЖИТЕЛИ И ПРОГРЕСС -->
-        <!-- ========================================== -->
-        <section class="lg:col-span-4 space-y-5">
-          
-          <!-- Circular Gauge Card -->
-          <div class="glass-panel rounded-2xl p-5 relative overflow-hidden flex flex-col items-center text-center">
-            <div class="w-full flex items-center justify-between mb-2">
-              <span class="font-display font-bold uppercase tracking-wider text-xs text-slate-300">Активность за день</span>
-              <span class="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800">Норма: 70+ PTS</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Базовая конфигурация сфер и квестов
+    const defaultData = {
+      spheres: [
+        { id: 'religion', name: 'Религия', icon: '☪️', lvl: 5.0, color: '#10b981' },
+        { id: 'health', name: 'Здоровье', icon: '🩺', lvl: 6.0, color: '#00f0ff' },
+        { id: 'career', name: 'Профессия & 21', icon: '💻', lvl: 5.0, color: '#f59e0b' },
+        { id: 'finance', name: 'Финансы', icon: '📊', lvl: 2.0, color: '#f43f5e' },
+        { id: 'family', name: 'Семья', icon: '🤝', lvl: 6.0, color: '#a855f7' },
+        { id: 'hobby', name: 'Увлечения', icon: '🎯', lvl: 4.0, color: '#ec4899' }
+      ],
+      quests: [
+        { id: 1, name: 'Пять обязательных молитв вовремя', pts: 25, sphere: 'religion', done: false },
+        { id: 2, name: 'Утренние и вечерние азкары', pts: 15, sphere: 'religion', done: false },
+        { id: 3, name: 'Прием терапии строго по графику', pts: 20, sphere: 'health', done: false },
+        { id: 4, name: 'Норма питания и КБЖУ (белок)', pts: 15, sphere: 'health', done: false },
+        { id: 5, name: 'Смена 9-18 без зависаний / Школа 21', pts: 25, sphere: 'career', done: false },
+        { id: 6, name: 'Учет всех расходов за день', pts: 20, sphere: 'finance', done: false },
+        { id: 7, name: 'Внимание семье / Помощь по дому', pts: 15, sphere: 'family', done: false },
+        { id: 8, name: 'Полезный отдых / Чтение', pts: 10, sphere: 'hobby', done: false }
+      ],
+      expenses: [],
+      income: 57190,
+      debts: 0,
+      streak: 4,
+      totalXpToday: 0
+    };
+
+    let state = JSON.parse(localStorage.getItem('life_os_state')) || defaultData;
+
+    function saveState() {
+      localStorage.setItem('life_os_state', JSON.stringify(state));
+    }
+
+    // Переключение табов
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabName));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const targetTab = document.getElementById('tab-' + tabName);
+      if (targetTab) targetTab.classList.add('active');
+
+      if (tabName === 'settings') renderSettings();
+      if (tabName === 'finance') renderFinance();
+    }
+
+    // Рендер дашборда
+    function renderDashboard() {
+      // 1. Сферы
+      const spheresContainer = document.getElementById('spheres-list');
+      spheresContainer.innerHTML = '';
+      let sumLvl = 0;
+
+      state.spheres.forEach(s => {
+        sumLvl += s.lvl;
+        const pct = Math.min(100, Math.round((s.lvl / 10) * 100));
+        spheresContainer.innerHTML += `
+          <div class="sphere-item">
+            <div class="sphere-meta">
+              <span>${s.icon} ${s.name}</span>
+              <span style="color: ${s.color};">Lvl ${s.lvl.toFixed(1)}/10</span>
             </div>
-
-            <!-- SVG Gauge -->
-            <div class="relative w-44 h-44 my-2 flex items-center justify-center">
-              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 140 140">
-                <!-- Track -->
-                <circle cx="70" cy="70" r="58" stroke="rgba(255,255,255,0.06)" stroke-width="12" fill="none" />
-                <!-- Progress Ring -->
-                <circle id="dailyGaugeCircle" cx="70" cy="70" r="58" stroke="url(#gaugeGradient)" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="91.1" class="transition-all duration-700 ease-out" />
-                <defs>
-                  <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#06b6d4" />
-                    <stop offset="50%" stop-color="#10b981" />
-                    <stop offset="100%" stop-color="#a855f7" />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <!-- Center Metric Text -->
-              <div class="absolute flex flex-col items-center justify-center">
-                <span id="gaugePointsValue" class="text-3xl font-display font-bold text-white tracking-wider">95</span>
-                <span class="text-[11px] font-mono text-slate-400">/ <span id="gaugeTargetValue">120</span> PTS</span>
-                <span id="gaugeStatusText" class="text-[10px] font-mono font-semibold text-emerald-400 mt-1 uppercase">Норма закрыта</span>
-              </div>
+            <div class="sphere-bar-bg">
+              <div class="sphere-bar-fill" style="width: ${pct}%; background: ${s.color}; color: ${s.color};"></div>
             </div>
-
-            <p class="text-xs text-slate-400 max-w-xs mt-1">
-              Дневной минимум считается закрытым при наборе 70 баллов. Это гарантирует непрерывность серии.
-            </p>
           </div>
+        `;
+      });
+      document.getElementById('overall-lvl').innerText = `Ср. Ур: ${(sumLvl / state.spheres.length).toFixed(1)}`;
 
-          <!-- Multipliers & Buffs Card -->
-          <div class="glass-panel rounded-2xl p-5 space-y-4">
-            <h4 class="font-display font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center justify-between">
-              <span>Множители и бонусы</span>
-              <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
-            </h4>
+      // 2. Квесты
+      const questsContainer = document.getElementById('quests-list');
+      questsContainer.innerHTML = '';
+      let earnedXp = 0;
 
-            <div class="grid grid-cols-2 gap-3 font-mono text-xs">
-              <!-- Streak Buff -->
-              <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-1">
-                  <span class="text-amber-400 font-bold flex items-center">🔥 Стрик</span>
-                  <span class="text-[10px] px-1.5 py-0.5 bg-amber-400/20 text-amber-300 rounded font-bold">x1.2 XP</span>
-                </div>
-                <div class="text-lg font-bold text-white mt-1" id="boxStreakDays">4 дня подряд</div>
- 
+      state.quests.forEach(q => {
+        if (q.done) earnedXp += q.pts;
+        questsContainer.innerHTML += `
+          <div class="quest-item ${q.done ? 'completed' : ''}" onclick="toggleQuest(${q.id})">
+            <div class="quest-left">
+              <div class="custom-checkbox">${q.done ? '✓' : ''}</div>
+              <span class="quest-name">${q.name}</span>
+            </div>
+            <span class="quest-pts">+${q.pts} PTS</span>
+          </div>
+        `;
+      });
+
+      // 3. Аналитика
+      state.totalXpToday = earnedXp;
+      document.getElementById('total-xp-display').innerText = earnedXp;
+      document.getElementById('streak-display').innerText = `${state.streak} дней`;
+
+      // Круг активности
+      const maxPts = 120;
+      const progress = Math.min(1, earnedXp / maxPts);
+      const circleOffset = 377 - (377 * progress);
+      document.getElementById('xp-circle').style.strokeDashoffset = circleOffset;
+    }
+
+    function toggleQuest(id) {
+      const q = state.quests.find(item => item.id === id);
+      if (q) {
+        q.done = !q.done;
+        // Звуковой отклик
+        playBeep(q.done ? 540 : 320);
+        saveState();
+        renderDashboard();
+      }
+    }
+
+    function completeDay() {
+      if (state.totalXpToday >= 70) {
+        state.streak += 1;
+        alert(`🏆 День зафиксирован! Набрано ${state.totalXpToday} PTS. Стрик вырос до ${state.streak} дней!`);
+      } else {
+        alert(`Для продления стрика нужно набрать минимум 70 PTS (сейчас: ${state.totalXpToday}). Постарайся закрыть еще пару квестов!`);
+      }
+      // Сброс галочек на новый день
+      state.quests.forEach(q => q.done = false);
+      saveState();
+      renderDashboard();
+    }
+
+    // Аудиосинтезатор Web Audio API
+    function playBeep(freq) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+      } catch (e) {}
+    }
+
+    // Финансы
+    function renderFinance() {
+      document.getElementById('fin-income').value = state.income || 57190;
+      document.getElementById('fin-debts').value = state.debts || 0;
+      
+      const list = document.getElementById('expenses-history');
+      list.innerHTML = '';
+      let sum = 0;
+
+      (state.expenses || []).slice().reverse().forEach(e => {
+        sum += Number(e.amount);
+        list.innerHTML += `
+          <div class="metric-row">
+            <span>${e.name}</span>
+            <strong style="color: var(--neon-rose);">- ${Number(e.amount).toLocaleString('ru-RU')} ₽</strong>
+          </div>
+        `;
+      });
+      document.getElementById('total-expenses-display').innerText = `${sum.toLocaleString('ru-RU')} ₽`;
+    }
+
+    function addExpense() {
+      const name = document.getElementById('expense-name').value.trim();
+      const amount = Number(document.getElementById('expense-amount').value);
+      if (!name || isNaN(amount) || amount <= 0) return alert('Заполните название и корректную сумму');
+
+      if (!state.expenses) state.expenses = [];
+      state.expenses.push({ name, amount, date: new Date().toLocaleDateString() });
+
+      document.getElementById('expense-name').value = '';
+      document.getElementById('expense-amount').value = '';
+      saveState();
+      renderFinance();
+    }
+
+    function saveFinance() {
+      state.income = Number(document.getElementById('fin-income').value) || 0;
+      state.debts = Number(document.getElementById('fin-debts').value) || 0;
+      saveState();
+    }
+
+    // Настройки
+    function renderSettings() {
+      const container = document.getElementById('spheres-settings-list');
+      container.innerHTML = '';
+      state.spheres.forEach((s, idx) => {
+        container.innerHTML += `
+          <div class="form-group">
+            <label>${s.icon} ${s.name} (текущий балл):</label>
+            <input type="number" step="0.1" min="1" max="10" id="sphere-lvl-${idx}" value="${s.lvl}">
+          </div>
+        `;
+      });
+    }
+
+    function saveSpheresConfig() {
+      state.spheres.forEach((s, idx) => {
+        const val = parseFloat(document.getElementById(`sphere-lvl-${idx}`).value);
+        if (!isNaN(val)) s.lvl = Math.min(10, Math.max(1, val));
+      });
+      saveState();
+      renderDashboard();
+      alert('Уровни сфер сохранены!');
+    }
+
+    function addNewQuest() {
+      const name = document.getElementById('new-quest-name').value.trim();
+      const pts = parseInt(document.getElementById('new-quest-pts').value);
+      const sphere = document.getElementById('new-quest-sphere').value;
+
+      if (!name || isNaN(pts)) return alert('Укажите название и баллы');
+
+      state.quests.push({
+        id: Date.now(),
+        name,
+        pts,
+        sphere,
+        done: false
+      });
+
+      document.getElementById('new-quest-name').value = '';
+      saveState();
+      renderDashboard();
+      alert('Новый квест добавлен!');
+    }
+
+    // Экспорт / Импорт
+    function exportData() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `life_os_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.spheres && imported.quests) {
+            state = imported;
+            saveState();
+            renderDashboard();
+            alert('Данные успешно импортированы!');
+          }
+        } catch (err) {
+          alert('Ошибка при чтении файла бэкапа');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Старт
+    renderDashboard();
+  </script>
+</body>
+</html>
