@@ -1,0 +1,368 @@
+```html
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX PROTOCOL // LIFE OS</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            display: ['"Chakra Petch"', 'sans-serif'],
+          },
+          colors: {
+            apex: {
+              bg: '#08090e',
+              card: 'rgba(16, 20, 31, 0.75)',
+              border: 'rgba(255, 255, 255, 0.08)',
+              borderGlow: 'rgba(56, 189, 248, 0.25)',
+              emerald: '#10b981',
+              cyan: '#06b6d4',
+              amber: '#f59e0b',
+              crimson: '#f43f5e',
+              purple: '#a855f7',
+              pink: '#ec4899',
+            }
+          },
+          boxShadow: {
+            'neon-cyan': '0 0 20px -5px rgba(6, 182, 212, 0.5)',
+            'neon-emerald': '0 0 20px -5px rgba(16, 185, 129, 0.5)',
+            'neon-amber': '0 0 20px -5px rgba(245, 158, 11, 0.5)',
+            'neon-purple': '0 0 20px -5px rgba(168, 85, 247, 0.5)',
+            'neon-crimson': '0 0 20px -5px rgba(244, 63, 94, 0.5)',
+            'card-glow': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #08090e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.4);
+    }
+
+    /* Ambient cyber grid background */
+    .cyber-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    /* Glass card styles */
+    .glass-panel {
+      background: rgba(14, 18, 28, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-panel:hover {
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    /* Pulsing & Glow animations */
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 8px currentColor); }
+      50% { opacity: 1; filter: drop-shadow(0 0 16px currentColor); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    /* Neon progress bar glow */
+    .bar-glow-emerald { box-shadow: 0 0 12px rgba(16, 185, 129, 0.7); }
+    .bar-glow-cyan    { box-shadow: 0 0 12px rgba(6, 182, 212, 0.7); }
+    .bar-glow-amber   { box-shadow: 0 0 12px rgba(245, 158, 11, 0.7); }
+    .bar-glow-crimson { box-shadow: 0 0 12px rgba(244, 63, 94, 0.7); }
+    .bar-glow-purple  { box-shadow: 0 0 12px rgba(168, 85, 247, 0.7); }
+    .bar-glow-pink    { box-shadow: 0 0 12px rgba(236, 72, 153, 0.7); }
+  </style>
+</head>
+
+<body class="bg-apex-bg text-slate-200 min-h-screen cyber-grid font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden">
+
+  <!-- TOP HUD NAVIGATION -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-3.5 backdrop-blur-xl">
+    <div class="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center space-x-4">
+        <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-500/40 shadow-neon-cyan">
+          <i data-lucide="shield" class="w-5 h-5 text-cyan-400"></i>
+          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
+          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full"></span>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-display font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-300 text-lg">APEX PROTOCOL</span>
+            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-500/30">v2.4 Online</span>
+          </div>
+          <div class="text-xs text-slate-400 font-mono flex items-center space-x-2">
+            <span id="liveClock">--:--:--</span>
+            <span>•</span>
+            <span id="liveDate">8 ноября, Воскресенье</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center bg-slate-900/80 p-1 rounded-xl border border-white/5 space-x-1">
+        <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-sm">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Главный дашборд</span>
+        </button>
+        <button onclick="switchTab('finances')" id="tabBtn-finances" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-white/5">
+          <i data-lucide="wallet" class="w-4 h-4"></i>
+          <span>Казна & Финансы</span>
+        </button>
+        <button onclick="switchTab('journal')" id="tabBtn-journal" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-white/5">
+          <i data-lucide="calendar-check" class="w-4 h-4"></i>
+          <span>Журнал спринта</span>
+        </button>
+        <button onclick="switchTab('settings')" id="tabBtn-settings" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-slate-200 hover:bg-white/5">
+          <i data-lucide="sliders" class="w-4 h-4"></i>
+          <span>Настройки</span>
+        </button>
+      </nav>
+
+      <!-- Character Global Stats / Streak -->
+      <div class="flex items-center space-x-4 font-mono text-xs">
+        <!-- Sprint Days Left -->
+        <div class="hidden lg:flex items-center bg-slate-900/60 border border-white/10 px-3.5 py-1.5 rounded-xl">
+          <i data-lucide="flag" class="w-3.5 h-3.5 text-amber-400 mr-2"></i>
+          <span class="text-slate-400 mr-1.5">Спринт:</span>
+          <span class="text-amber-300 font-bold" id="sprintDaysRemaining">53 дня</span>
+        </div>
+
+        <!-- Streak Counter -->
+        <div class="flex items-center bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 px-3.5 py-1.5 rounded-xl">
+          <span class="text-base mr-1.5">🔥</span>
+          <span class="text-slate-300 mr-1">Стрик:</span>
+          <span class="text-amber-400 font-bold font-mono text-sm" id="hudStreakDays">4 дня</span>
+          <span class="ml-2 text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">x1.2 XP</span>
+        </div>
+
+        <!-- Overall Level Badge -->
+        <div class="flex items-center bg-purple-950/40 border border-purple-500/30 px-3.5 py-1.5 rounded-xl">
+          <i data-lucide="award" class="w-4 h-4 text-purple-400 mr-2"></i>
+          <span class="text-slate-300 mr-1">Уровень:</span>
+          <span class="text-purple-300 font-bold font-mono text-sm" id="hudGlobalLevel">Lvl 4.7</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="max-w-[1720px] mx-auto p-4 md:p-6 pb-20">
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: ГЛАВНЫЙ ДАШБОРД (3 КОЛОНКИ НА НОУТБУКЕ) -->
+    <!-- ============================================================== -->
+    <div id="view-dashboard" class="tab-view block space-y-6">
+      
+      <!-- Top Alert / Motive Banner -->
+      <div class="glass-panel rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between border-l-4 border-l-cyan-400 gap-4">
+        <div class="flex items-center space-x-3.5">
+          <div class="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="font-display font-semibold text-white tracking-wide flex items-center gap-2">
+              Тестовый полигон: «Спринт до 31 декабря»
+              <span class="text-xs font-mono font-normal text-cyan-300 bg-cyan-950/60 border border-cyan-800 px-2 py-0.5 rounded-full">Режим закрепления базы</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Главная цель периода: не ставить рекорды, а закрепить привычку ежедневного заполнения и удерживать стрик.</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 self-end md:self-center">
+          <button onclick="resetDayQuestsPrompt()" class="px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/20 text-xs font-mono text-slate-300 hover:bg-white/5 transition flex items-center space-x-1.5">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>Сброс дня</span>
+          </button>
+          <button onclick="completeDayRoutine()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-semibold text-xs tracking-wider uppercase font-display shadow-neon-cyan transition transform active:scale-95 flex items-center space-x-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span>Зафиксировать день</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 COLUMNS DESKTOP LAYOUT (1fr - 1.25fr - 1fr) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- ========================================== -->
+        <!-- COLUMN 1: КАРТА СФЕР (Характеристики 1-10) -->
+        <!-- ========================================== -->
+        <section class="lg:col-span-4 space-y-4">
+          <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center space-x-2.5">
+                <i data-lucide="compass" class="w-5 h-5 text-cyan-400"></i>
+                <h3 class="font-display font-bold uppercase tracking-wider text-sm text-slate-100">Карта сфер</h3>
+              </div>
+              <span class="text-[11px] font-mono text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">Прокачка 1–10</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-5 leading-relaxed">
+              Текущий уровень формируется из базовой оценки и очков, полученных за регулярные действия в квестах.
+            </p>
+
+            <!-- Sphere Cards Container -->
+            <div id="spheresContainer" class="space-y-4">
+              <!-- Rendered via JavaScript -->
+            </div>
+
+            <!-- Inspect Sphere Modal / Helper tip -->
+            <div class="mt-5 p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] text-slate-400 flex items-start space-x-2.5">
+              <i data-lucide="info" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+              <span>Кликните на карточку сферы, чтобы раскрыть её подробные составляющие и текущие стандарты.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- COLUMN 2: КВЕСТЫ НА СЕГОДНЯ (Ежедневный To-Do) -->
+        <!-- ========================================== -->
+        <section class="lg:col-span-4 space-y-4">
+          <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+            
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center space-x-2.5">
+                <i data-lucide="crosshair" class="w-5 h-5 text-emerald-400"></i>
+                <h3 class="font-display font-bold uppercase tracking-wider text-sm text-slate-100">Квесты на сегодня</h3>
+              </div>
+              <span id="questsCompletedCounter" class="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                4 / 8 выполнено
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mb-5">
+              Отмечайте выполненные действия. Каждое действие мгновенно начисляет очки и питает шкалу сферы.
+            </p>
+
+            <!-- Quests List -->
+            <div id="dailyQuestsList" class="space-y-2.5">
+              <!-- Rendered via JavaScript -->
+            </div>
+
+            <!-- Add Custom Task Form -->
+            <div class="mt-6 pt-5 border-t border-white/10">
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="text-xs font-mono font-medium text-slate-300 flex items-center gap-1.5">
+                  <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-cyan-400"></i> Добавить разовую задачу дня
+                </span>
+                <span class="text-[10px] font-mono text-cyan-400">+10 PTS</span>
+              </div>
+              <form id="addCustomTaskForm" onsubmit="addCustomTask(event)" class="space-y-2.5">
+                <div class="flex gap-2">
+                  <input type="text" id="customTaskTitle" placeholder="Что нужно сделать сегодня..." required class="flex-1 bg-slate-900/90 border border-white/10 rounded-xl px-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition" />
+                  <select id="customTaskSphere" class="bg-slate-900/90 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-500 transition">
+                    <option value="religion">Религия</option>
+                    <option value="health">Здоровье</option>
+                    <option value="career" selected>Профессия</option>
+                    <option value="finances">Финансы</option>
+                    <option value="family">Семья</option>
+                    <option value="hobbies">Увлечения</option>
+                  </select>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-1.5 text-xs text-slate-400 font-mono">
+                    <span>Приоритет:</span>
+                    <label class="cursor-pointer"><input type="radio" name="priority" value="P1" class="hidden peer"><span class="peer-checked:bg-rose-500/20 peer-checked:text-rose-300 peer-checked:border-rose-500 px-2 py-0.5 rounded border border-white/10 text-[10px]">P1 Высокий</span></label>
+                    <label class="cursor-pointer"><input type="radio" name="priority" value="P2" checked class="hidden peer"><span class="peer-checked:bg-amber-500/20 peer-checked:text-amber-300 peer-checked:border-amber-500 px-2 py-0.5 rounded border border-white/10 text-[10px]">P2 Средний</span></label>
+                  </div>
+                  <button type="submit" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 text-xs font-mono font-semibold transition">
+                    + Добавить
+                  </button>
+                </div>
+              </form>
+
+              <!-- Custom Tasks Render Target -->
+              <div id="customTasksContainer" class="mt-3 space-y-2">
+                <!-- Dynamically generated custom tasks -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- COLUMN 3: АНАЛИТИКА, МНОЖИТЕЛИ И ПРОГРЕСС -->
+        <!-- ========================================== -->
+        <section class="lg:col-span-4 space-y-5">
+          
+          <!-- Circular Gauge Card -->
+          <div class="glass-panel rounded-2xl p-5 relative overflow-hidden flex flex-col items-center text-center">
+            <div class="w-full flex items-center justify-between mb-2">
+              <span class="font-display font-bold uppercase tracking-wider text-xs text-slate-300">Активность за день</span>
+              <span class="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800">Норма: 70+ PTS</span>
+            </div>
+
+            <!-- SVG Gauge -->
+            <div class="relative w-44 h-44 my-2 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 140 140">
+                <!-- Track -->
+                <circle cx="70" cy="70" r="58" stroke="rgba(255,255,255,0.06)" stroke-width="12" fill="none" />
+                <!-- Progress Ring -->
+                <circle id="dailyGaugeCircle" cx="70" cy="70" r="58" stroke="url(#gaugeGradient)" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="364.4" stroke-dashoffset="91.1" class="transition-all duration-700 ease-out" />
+                <defs>
+                  <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#06b6d4" />
+                    <stop offset="50%" stop-color="#10b981" />
+                    <stop offset="100%" stop-color="#a855f7" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <!-- Center Metric Text -->
+              <div class="absolute flex flex-col items-center justify-center">
+                <span id="gaugePointsValue" class="text-3xl font-display font-bold text-white tracking-wider">95</span>
+                <span class="text-[11px] font-mono text-slate-400">/ <span id="gaugeTargetValue">120</span> PTS</span>
+                <span id="gaugeStatusText" class="text-[10px] font-mono font-semibold text-emerald-400 mt-1 uppercase">Норма закрыта</span>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-400 max-w-xs mt-1">
+              Дневной минимум считается закрытым при наборе 70 баллов. Это гарантирует непрерывность серии.
+            </p>
+          </div>
+
+          <!-- Multipliers & Buffs Card -->
+          <div class="glass-panel rounded-2xl p-5 space-y-4">
+            <h4 class="font-display font-bold text-xs uppercase tracking-wider text-slate-300 flex items-center justify-between">
+              <span>Множители и бонусы</span>
+              <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+            </h4>
+
+            <div class="grid grid-cols-2 gap-3 font-mono text-xs">
+              <!-- Streak Buff -->
+              <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-amber-400 font-bold flex items-center">🔥 Стрик</span>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-amber-400/20 text-amber-300 rounded font-bold">x1.2 XP</span>
+                </div>
+                <div class="text-lg font-bold text-white mt-1" id="boxStreakDays">4 дня подряд</div>
+ 
